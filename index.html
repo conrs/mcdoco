@@ -368,16 +368,13 @@
       color: var(--white);
     }
 
-    /* ─── RAINBOW BAR ────────────────────────────────────── */
-    .rainbow-bar {
-      height: 7px;
-      background: linear-gradient(90deg,
-        var(--r)  0%     16.66%,
-        var(--o)  16.66% 33.33%,
-        var(--y)  33.33% 50%,
-        var(--g)  50%    66.66%,
-        var(--b)  66.66% 83.33%,
-        var(--v)  83.33% 100%
+    /* ─── SECTION DIVIDER (row of tiny gray squares) ─────── */
+    .divider {
+      height: 2px;
+      background-image: repeating-linear-gradient(
+        90deg,
+        #2c2c2c 0, #2c2c2c 2px,
+        transparent 2px, transparent 8px
       );
     }
 
@@ -931,7 +928,7 @@
     </div>
   </section>
 
-  <div class="rainbow-bar"></div>
+  <div class="divider"></div>
 
   <!-- SERVICES -->
   <section class="services" id="services">
@@ -982,7 +979,7 @@
     </div>
   </section>
 
-  <div class="rainbow-bar"></div>
+  <div class="divider"></div>
 
   <!-- COMPARE -->
   <section class="compare" id="compare">
@@ -1025,7 +1022,7 @@
     </div>
   </section>
 
-  <div class="rainbow-bar"></div>
+  <div class="divider"></div>
 
   <!-- PROCESS -->
   <section class="process">
@@ -1052,7 +1049,7 @@
     </div>
   </section>
 
-  <div class="rainbow-bar"></div>
+  <div class="divider"></div>
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
