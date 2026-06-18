@@ -43,18 +43,31 @@
       --font-mono: 'Space Mono', 'Courier New', monospace;
     }
 
-    /* No overflow on <html>: setting it here breaks position:fixed on iOS Safari. */
-    html { scroll-behavior: smooth; }
+    /* Background on <html> keeps the canvas — and the iOS status-bar band
+       above the nav — painted dark. */
+    html { scroll-behavior: smooth; background: var(--bg); }
 
+    /* Body is locked to the viewport and does NOT scroll; the inner
+       .scroll-container scrolls instead. This clips scrolling content below the
+       nav so it can't bleed into the iOS status-bar band above it, and keeps
+       the dynamic toolbar from resizing the viewport. */
     body {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
       background: var(--bg);
       color: var(--white);
       font-family: var(--font-mono);
       font-size: 16px;
       line-height: 1.6;
-      /* clip (not hidden) guards against stray horizontal overflow without
-         creating a scroll container that would break the fixed nav. */
+    }
+
+    .scroll-container {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
       overflow-x: clip;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* CRT scanline texture over the whole page */
@@ -72,25 +85,22 @@
       pointer-events: none;
       z-index: 9000;
     }
-
     /* ─── NAV ────────────────────────────────────────────── */
     nav {
-      position: fixed;
+      position: absolute;
+      top: 0;
       inset: 0 0 auto 0;
       z-index: 100;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      /* Top/side padding absorbs the iOS safe-area insets so the nav
-         background fills the Dynamic Island / notch strip and content
-         can never scroll into the gap above it. */
       padding: 1rem 2.5rem;
+      /* safe-area insets keep the bar clear of the notch on devices that have one */
       padding-top: calc(1rem + env(safe-area-inset-top, 0px));
       padding-left: calc(2.5rem + env(safe-area-inset-left, 0px));
       padding-right: calc(2.5rem + env(safe-area-inset-right, 0px));
-      background: rgba(10, 10, 10, 0.94);
+      background: var(--bg);
       border-bottom: 1px solid #1e1e1e;
-      backdrop-filter: blur(6px);
     }
 
     .nav-wordmark {
@@ -899,6 +909,7 @@
     </ul>
   </nav>
 
+  <div class="scroll-container">
   <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
@@ -1087,6 +1098,7 @@
     <span>&copy; 2026 McDoCo, LLC</span>
     <span>Product Incubation &amp; Fractional CTO</span>
   </footer>
+  </div><!-- /scroll-container -->
 
   <script>
     (function () {
