@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>McDoCo, LLC — Product Incubation &amp; Fractional CTO</title>
   <meta name="description" content="McDoCo, LLC is a product incubator and fractional CTO firm. We help you figure out what's worth building before you build it.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,7 +81,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      /* Top/side padding absorbs the iOS safe-area insets so the nav
+         background fills the Dynamic Island / notch strip and content
+         can never scroll into the gap above it. */
       padding: 1rem 2.5rem;
+      padding-top: calc(1rem + env(safe-area-inset-top, 0px));
+      padding-left: calc(2.5rem + env(safe-area-inset-left, 0px));
+      padding-right: calc(2.5rem + env(safe-area-inset-right, 0px));
       background: rgba(10, 10, 10, 0.94);
       border-bottom: 1px solid #1e1e1e;
       backdrop-filter: blur(6px);
@@ -845,7 +851,7 @@
     /* ─── RESPONSIVE ─────────────────────────────────────── */
     @media (max-width: 820px) {
       .hero {
-        padding: 7rem 1.25rem 3rem;
+        padding: calc(7rem + env(safe-area-inset-top, 0px)) 1.25rem 3rem;
       }
       .hero-inner {
         grid-template-columns: 1fr;
