@@ -627,6 +627,205 @@
       margin-left: 1px;
     }
 
+    /* ─── COMPARE / CHARTS ───────────────────────────────── */
+    .compare {
+      padding: 6rem 2.5rem;
+      background: var(--surface);
+      border-top: 1px solid #1a1a1a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .compare-intro {
+      max-width: 1080px;
+      font-size: 0.9rem;
+      color: #888;
+      line-height: 1.9;
+      margin: -2rem 0 3rem;
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--dim);
+      border: 1px solid var(--dim);
+    }
+
+    .chart-card {
+      background: var(--surface);
+      padding: 2rem 1.75rem 1.75rem;
+      border-top: 3px solid var(--dim);
+    }
+    .chart-card--trad   { border-top-color: #ff3b30; }
+    .chart-card--mcdoco { border-top-color: var(--g); }
+
+    .chart-kicker {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .chart-card--trad   .chart-kicker { color: #ff3b30; }
+    .chart-card--mcdoco .chart-kicker { color: var(--g); }
+
+    .chart-title {
+      font-family: var(--font-mark);
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    .chart {
+      width: 100%;
+      height: auto;
+      display: block;
+      overflow: visible;
+    }
+
+    .chart-axis {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #555;
+      text-align: right;
+      margin-top: 0.3rem;
+    }
+
+    .chart-legend {
+      list-style: none;
+      display: flex;
+      gap: 1.25rem;
+      margin: 1rem 0 0.85rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #999;
+    }
+    .chart-legend li { display: flex; align-items: center; gap: 0.45rem; }
+    .swatch { width: 14px; height: 10px; display: inline-block; }
+    .swatch--exp   { background: var(--amber); }
+    .swatch--users { background: var(--cyan); }
+
+    .chart-note {
+      font-size: 0.8rem;
+      color: #777;
+      line-height: 1.7;
+    }
+
+    /* SVG series styling + entrance animation (animation only enhances;
+       bars/line render at full size if the JS observer never fires) */
+    .exp-bar {
+      fill: var(--amber);
+      opacity: 0.85;
+    }
+    .user-line {
+      fill: none;
+      stroke: var(--cyan);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+    .user-dot { fill: var(--cyan); }
+    .chart-base { stroke: #2a2a2a; stroke-width: 1; }
+
+    .chart--anim .exp-bar {
+      transform: scaleY(0);
+      transform-box: fill-box;
+      transform-origin: bottom;
+      transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .chart--anim.in-view .exp-bar { transform: scaleY(1); }
+
+    .chart--anim .user-line {
+      stroke-dashoffset: var(--len, 0);
+      stroke-dasharray: var(--len, 0);
+      transition: stroke-dashoffset 1s ease 0.35s;
+    }
+    .chart--anim.in-view .user-line { stroke-dashoffset: 0; }
+
+    .chart--anim .user-dot {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .chart--anim.in-view .user-dot { opacity: 1; transition-delay: 1.15s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .chart--anim .exp-bar,
+      .chart--anim .user-line,
+      .chart--anim .user-dot { transition: none; }
+    }
+
+    /* ─── SIGNUP FORM ────────────────────────────────────── */
+    .signup {
+      display: flex;
+      max-width: 480px;
+      border: 2px solid var(--white);
+      background: #000;
+      transition: border-color 0.15s;
+    }
+    .signup:focus-within { border-color: var(--cyan); }
+
+    .signup-input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: 0;
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      padding: 0.85rem 1rem;
+    }
+    .signup-input::placeholder { color: #555; }
+    .signup-input:focus { outline: none; background: #0e0e0e; }
+
+    .signup-btn {
+      background: var(--white);
+      color: #000;
+      border: 0;
+      border-left: 2px solid var(--white);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0 1.5rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+    }
+    .signup-btn:hover { background: var(--cyan); border-left-color: var(--cyan); }
+
+    .signup-note {
+      font-size: 0.72rem;
+      color: #666;
+      margin-top: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .signup-success {
+      display: none;
+      font-family: var(--font-mark);
+      font-weight: 800;
+      font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+      letter-spacing: 0.02em;
+      color: var(--lime);
+    }
+    .signup-success.show { display: block; }
+
+    .signup-sink { display: none; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     /* ─── FOOTER ─────────────────────────────────────────── */
     footer {
       padding: 1.75rem 2.5rem;
@@ -659,6 +858,7 @@
       .btn-row { justify-content: center; }
       .cards { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; }
+      .chart-grid { grid-template-columns: 1fr; }
       nav ul { display: none; }
       footer { flex-direction: column; text-align: center; }
     }
@@ -666,6 +866,13 @@
     @media (max-width: 480px) {
       .mark { width: 160px; height: 160px; }
       .mark-cell { font-size: 4.25rem; }
+      .signup { flex-direction: column; }
+      .signup-btn {
+        border-left: 0;
+        border-top: 2px solid var(--white);
+        padding: 0.8rem 1.5rem;
+      }
+      .signup-btn:hover { border-top-color: var(--cyan); }
     }
   </style>
 </head>
@@ -679,6 +886,7 @@
     <ul>
       <li><a href="#services">Services</a></li>
       <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#compare">Why us</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -771,6 +979,49 @@
 
   <div class="rainbow-bar"></div>
 
+  <!-- COMPARE -->
+  <section class="compare" id="compare">
+    <div class="section-wrap">
+      <p class="section-tag">// The difference</p>
+      <h2 class="section-hl">Spend that tracks reality.</h2>
+      <p class="compare-intro">
+        A traditional build burns cash for months before a single user shows up - and keeps burning right through the growth that finally arrives. We match spend to traction, so every dollar follows evidence, not hope.
+      </p>
+
+      <div class="chart-grid">
+
+        <figure class="chart-card chart-card--trad">
+          <p class="chart-kicker">// Traditional build</p>
+          <h3 class="chart-title">Spend first. Hope later.</h3>
+          <svg class="chart" viewBox="0 0 392 240" preserveAspectRatio="xMidYMid meet"
+               role="img" aria-label="Traditional build: high expenditure for months while user growth stays flat, then growth arrives late with spend still high."></svg>
+          <p class="chart-axis">Months &rarr;</p>
+          <ul class="chart-legend">
+            <li><span class="swatch swatch--exp"></span>Expenditure</li>
+            <li><span class="swatch swatch--users"></span>Users</li>
+          </ul>
+          <p class="chart-note">Months of burn before a single user shows up - and the spend never lets up.</p>
+        </figure>
+
+        <figure class="chart-card chart-card--mcdoco">
+          <p class="chart-kicker">// The McDoCo way</p>
+          <h3 class="chart-title">Spend that follows value.</h3>
+          <svg class="chart" viewBox="0 0 392 240" preserveAspectRatio="xMidYMid meet"
+               role="img" aria-label="The McDoCo way: expenditure ramps up in step with user growth, staying matched throughout."></svg>
+          <p class="chart-axis">Months &rarr;</p>
+          <ul class="chart-legend">
+            <li><span class="swatch swatch--exp"></span>Expenditure</li>
+            <li><span class="swatch swatch--users"></span>Users</li>
+          </ul>
+          <p class="chart-note">Every increase in spend is earned by real, validated traction.</p>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="rainbow-bar"></div>
+
   <!-- PROCESS -->
   <section class="process">
     <div class="section-wrap">
@@ -796,17 +1047,30 @@
     </div>
   </section>
 
+  <div class="rainbow-bar"></div>
+
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="section-wrap">
       <p class="section-tag">// Get in touch</p>
       <h2 class="contact-hl">Let's figure out what's worth building.</h2>
       <p class="contact-sub">
-        Whether you have an idea to test or a team that needs technical leadership, we should talk.
+        Whether you have an idea to test or a team that needs technical leadership, we should talk. Leave your email and we'll reach out.
       </p>
-      <a href="mailto:matt@mcdoco.com" class="contact-email">
-        matt@mcdoco.com<span class="cursor"></span>
-      </a>
+      <form class="signup" id="signup"
+            action="https://docs.google.com/forms/d/e/1FAIpQLScCUaYYVDvVpXy-cfHuW9_Fmp9h6nYkiAzs1_IKB9M62ZaVoQ/formResponse"
+            method="POST" target="signup-sink">
+        <label class="sr-only" for="signup-email">Email address</label>
+        <input id="signup-email" class="signup-input" type="email"
+               name="entry.342486757" placeholder="you@company.com"
+               required autocomplete="email">
+        <button class="signup-btn" type="submit">Get in touch</button>
+      </form>
+
+      <p class="signup-success" id="signup-success">Thanks - we'll be in touch.<span class="cursor"></span></p>
+      <p class="signup-note" id="signup-note">No spam. Just a reply from a human.</p>
+
+      <iframe name="signup-sink" class="signup-sink" tabindex="-1" aria-hidden="true" title="form target"></iframe>
     </div>
   </section>
 
@@ -815,6 +1079,120 @@
     <span>&copy; 2026 McDoCo, LLC</span>
     <span>Product Incubation &amp; Fractional CTO</span>
   </footer>
+
+  <script>
+    (function () {
+      'use strict';
+      var NS = 'http://www.w3.org/2000/svg';
+
+      // Each scenario: expenditure (bars) and users (line), 0–100 scale, 8 "months".
+      // Traditional: heavy spend from day one, users flat for months then a late spike.
+      // McDoCo: spend ramps in step with steadily climbing users.
+      var DATA = {
+        trad:   { exp:   [80, 92, 86, 95, 90, 93, 88, 94],
+                  users: [1, 2, 3, 4, 6, 12, 30, 60] },
+        mcdoco: { exp:   [10, 16, 24, 34, 46, 58, 70, 82],
+                  users: [6, 14, 24, 36, 50, 64, 78, 92] }
+      };
+
+      function el(name, attrs) {
+        var node = document.createElementNS(NS, name);
+        for (var k in attrs) node.setAttribute(k, attrs[k]);
+        return node;
+      }
+
+      function renderChart(svg, exp, users) {
+        var x0 = 28, x1 = 380, yBase = 210, yTop = 40;
+        var n = exp.length, span = x1 - x0, step = span / n, barW = step * 0.46;
+        var h = function (v) { return (v / 100) * (yBase - yTop); };
+        var yOf = function (v) { return yBase - h(v); };
+
+        // baseline
+        svg.appendChild(el('line', {
+          x1: x0, y1: yBase, x2: x1, y2: yBase, class: 'chart-base'
+        }));
+
+        // expenditure bars (stock-style volume), staggered entrance
+        exp.forEach(function (v, i) {
+          var cx = x0 + step * (i + 0.5);
+          var bh = h(v);
+          var bar = el('rect', {
+            x: (cx - barW / 2).toFixed(1),
+            y: (yBase - bh).toFixed(1),
+            width: barW.toFixed(1),
+            height: Math.max(bh, 0.5).toFixed(1),
+            class: 'exp-bar'
+          });
+          bar.style.transitionDelay = (i * 0.06) + 's';
+          svg.appendChild(bar);
+        });
+
+        // user-growth line
+        var pts = users.map(function (u, i) {
+          return (x0 + step * (i + 0.5)).toFixed(1) + ',' + yOf(u).toFixed(1);
+        }).join(' ');
+        var line = el('polyline', { points: pts, class: 'user-line' });
+        svg.appendChild(line);
+
+        // dots on the line
+        users.forEach(function (u, i) {
+          svg.appendChild(el('circle', {
+            cx: (x0 + step * (i + 0.5)).toFixed(1),
+            cy: yOf(u).toFixed(1),
+            r: 3.2,
+            class: 'user-dot'
+          }));
+        });
+
+        // prime the line-draw animation with its real length
+        try {
+          var len = Math.ceil(line.getTotalLength());
+          svg.style.setProperty('--len', len);
+        } catch (e) { /* getTotalLength unsupported — line just shows */ }
+
+        svg.classList.add('chart--anim');
+      }
+
+      var charts = document.querySelectorAll('.compare .chart');
+      var keys = ['trad', 'mcdoco'];
+      charts.forEach(function (svg, i) {
+        var d = DATA[keys[i]] || DATA.trad;
+        renderChart(svg, d.exp, d.users);
+      });
+
+      // reveal on scroll
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.35 });
+        charts.forEach(function (svg) { io.observe(svg); });
+      } else {
+        charts.forEach(function (svg) { svg.classList.add('in-view'); });
+      }
+
+      // ── Signup form: submit to Google Form via hidden iframe, no navigation ──
+      var form = document.getElementById('signup');
+      var sink = document.querySelector('iframe[name="signup-sink"]');
+      var success = document.getElementById('signup-success');
+      var note = document.getElementById('signup-note');
+      var submitting = false;
+
+      if (form && sink) {
+        form.addEventListener('submit', function () {
+          // let the browser's native required/email validation gate this
+          if (!form.checkValidity || form.checkValidity()) submitting = true;
+        });
+        sink.addEventListener('load', function () {
+          if (!submitting) return; // ignore the iframe's initial load
+          form.style.display = 'none';
+          if (note) note.style.display = 'none';
+          if (success) success.classList.add('show');
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>
