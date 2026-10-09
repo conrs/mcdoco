@@ -775,73 +775,12 @@
       .chart--anim .user-dot { transition: none; }
     }
 
-    /* ─── SIGNUP FORM ────────────────────────────────────── */
-    .signup {
-      display: flex;
-      max-width: 480px;
-      border: 2px solid var(--white);
-      background: #000;
-      transition: border-color 0.15s;
-    }
-    .signup:focus-within { border-color: var(--cyan); }
-
-    .signup-input {
-      flex: 1;
-      min-width: 0;
-      background: transparent;
-      border: 0;
-      color: var(--white);
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      padding: 0.85rem 1rem;
-    }
-    .signup-input::placeholder { color: #555; }
-    .signup-input:focus { outline: none; background: #0e0e0e; }
-
-    .signup-btn {
-      background: var(--white);
-      color: #000;
-      border: 0;
-      border-left: 2px solid var(--white);
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0 1.5rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.15s, color 0.15s;
-    }
-    .signup-btn:hover { background: var(--cyan); border-left-color: var(--cyan); }
-
+    /* ─── CONTACT NOTE ───────────────────────────────────── */
     .signup-note {
       font-size: 0.72rem;
       color: #666;
       margin-top: 1rem;
       letter-spacing: 0.05em;
-    }
-
-    .signup-success {
-      display: none;
-      font-family: var(--font-mark);
-      font-weight: 800;
-      font-size: clamp(1.2rem, 2.4vw, 1.8rem);
-      letter-spacing: 0.02em;
-      color: var(--lime);
-    }
-    .signup-success.show { display: block; }
-
-    .signup-sink { display: none; }
-
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
     }
 
     /* ─── FOOTER ─────────────────────────────────────────── */
@@ -884,13 +823,6 @@
     @media (max-width: 480px) {
       .mark { width: 160px; height: 160px; }
       .mark-cell { font-size: 4.25rem; }
-      .signup { flex-direction: column; }
-      .signup-btn {
-        border-left: 0;
-        border-top: 2px solid var(--white);
-        padding: 0.8rem 1.5rem;
-      }
-      .signup-btn:hover { border-top-color: var(--cyan); }
     }
   </style>
 </head>
@@ -1074,22 +1006,11 @@
       <p class="section-tag">// Get in touch</p>
       <h2 class="contact-hl">Let's figure out what's worth building.</h2>
       <p class="contact-sub">
-        Whether you have an idea to test or a team that needs technical leadership, we should talk. Leave your email and we'll reach out.
+        Whether you have an idea to test or a team that needs technical leadership, we should talk. Tell us what you're working on and where you'd like a hand.
       </p>
-      <form class="signup" id="signup"
-            action="https://docs.google.com/forms/d/e/1FAIpQLScCUaYYVDvVpXy-cfHuW9_Fmp9h6nYkiAzs1_IKB9M62ZaVoQ/formResponse"
-            method="POST" target="signup-sink">
-        <label class="sr-only" for="signup-email">Email address</label>
-        <input id="signup-email" class="signup-input" type="email"
-               name="entry.342486757" placeholder="you@company.com"
-               required autocomplete="email">
-        <button class="signup-btn" type="submit">Get in touch</button>
-      </form>
-
-      <p class="signup-success" id="signup-success">Thanks - we'll be in touch.<span class="cursor"></span></p>
-      <p class="signup-note" id="signup-note">No spam. Just a reply from a human.</p>
-
-      <iframe name="signup-sink" class="signup-sink" tabindex="-1" aria-hidden="true" title="form target"></iframe>
+      <a class="contact-email"
+         href="mailto:hello@mcdoco.com?subject=Saying%20hi&amp;body=Hey%20McDoCo%2C%0A%0AA%20bit%20about%20me%20and%20what%20I%27m%20building%3A%0A%0A%0AWhere%20I%27m%20stuck%2C%20or%20what%20I%27d%20love%20a%20second%20opinion%20on%3A%0A%0A%0AThanks%21%0A">hello@mcdoco.com</a>
+      <p class="signup-note">No spam. Just a reply from a human.</p>
     </div>
   </section>
 
@@ -1190,26 +1111,6 @@
         charts.forEach(function (svg) { io.observe(svg); });
       } else {
         charts.forEach(function (svg) { svg.classList.add('in-view'); });
-      }
-
-      // ── Signup form: submit to Google Form via hidden iframe, no navigation ──
-      var form = document.getElementById('signup');
-      var sink = document.querySelector('iframe[name="signup-sink"]');
-      var success = document.getElementById('signup-success');
-      var note = document.getElementById('signup-note');
-      var submitting = false;
-
-      if (form && sink) {
-        form.addEventListener('submit', function () {
-          // let the browser's native required/email validation gate this
-          if (!form.checkValidity || form.checkValidity()) submitting = true;
-        });
-        sink.addEventListener('load', function () {
-          if (!submitting) return; // ignore the iframe's initial load
-          form.style.display = 'none';
-          if (note) note.style.display = 'none';
-          if (success) success.classList.add('show');
-        });
       }
     })();
   </script>
